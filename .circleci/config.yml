@@ -1,0 +1,107 @@
+version: 2.1
+commands:
+  setup_environment:
+    steps:
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "poetry.lock" }}
+
+      - run:
+          name: install dependencies
+          command: |
+            sudo apt update
+            sudo apt install libsasl2-dev curl
+            curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | POETRY_VERSION=1.1.12 python3 -
+            python3 -m venv venv
+            . venv/bin/activate
+            poetry run pip install --upgrade pip==22.0.1
+            make install-deps
+
+      - save_cache:
+          paths:
+            - ./venv
+          key: v1-dependencies-{{ checksum "poetry.lock" }}
+
+  setup_docker_environment:
+    steps:
+      - run:
+          name: Setup Docker Environment
+          command: |
+            sudo apt-get --allow-releaseinfo-change update
+            sudo apt-get install curl -y
+            sudo rm -rf /usr/bin/docker-compose
+            # Download docker-compose 1.29.2
+            sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+            sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+jobs:
+
+  test:
+    docker:
+      - image: circleci/python:3.7.5
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.6
+      - setup_docker_environment
+      - run:
+          name: Run Tests
+          command: |
+            make ci-test
+
+      - store_artifacts:
+          path: cover
+          destination: cover
+
+      - store_artifacts:
+          path: tests/test-report.html
+          destination: test-report.html
+
+  pre-commit-validate:
+    docker:
+      - image: circleci/python:3.7.5
+    steps:
+      - checkout
+      - setup_environment
+      - run:
+          name: Run Pre-commit and validate all
+          command: |
+            . venv/bin/activate
+            make validate
+
+  build-docker-images:
+    docker:
+      - image: circleci/python:3.7.5
+    steps:
+      - checkout
+      - setup_docker_environment
+      - run:
+          name: Validate Docker images can successfully build
+          command: |
+            make build-local
+            make build
+
+  release-git-repo:
+    docker:
+      - image: circleci/python:3.7.5
+    steps:
+      - checkout
+      - run:
+          name: Push Release
+          command:  |
+            . venv/bin/activate
+            make release
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - test:
+      - validate
+      - build-docker-image
+      - release-git-repo:
+          filters:
+            branches:
+              only: main

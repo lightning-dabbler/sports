@@ -1,0 +1,49 @@
+# National Basketball Association (NBA)
+matchups:
+    filename: fox-sports/matchups/nba/fox-sports-nba-matchups-{timestamp}
+    url: https://api.foxsports.com/bifrost/v1/nba/league/scores-segment/{date_str}
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+matchup-team-stats:
+    filename: fox-sports/matchup-team-stats/nba/fox-sports-nba-matchup-team-stats-{timestamp}
+    url: https://api.foxsports.com/bifrost/v1/nba/event/{event_id}/matchup
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+matchup-team-leaders-stats:
+    filename: fox-sports/matchup-team-leaders-stats/nba/fox-sports-nba-matchup-team-leaders-stats-{timestamp}
+
+fox-odds:
+    filename: fox-sports/fox-odds/nba/fox-sports-nba-fox-odds-{timestamp}
+
+fox-projections:
+    filename: fox-sports/fox-projections/nba/fox-sports-nba-fox-projections-{timestamp}
+
+team-player-stats:
+    filename: fox-sports/team-player-stats/nba/fox-sports-nba-team-player-stats-{timestamp}-current
+
+team-stats:
+    filename: fox-sports/team-stats/nba/fox-sports-nba-team-stats-{timestamp}-current
+    url: https://api.foxsports.com/bifrost/v1/nba/team/{team_id}/stats
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+team-roster:
+    filename: fox-sports/team-roster/nba/fox-sports-nba-team-roster-{timestamp}-current
+    # https://api.foxsports.com/bifrost/v1/nba/team/8/roster?apikey=jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+    url: https://api.foxsports.com/bifrost/v1/nba/team/{team_id}/roster
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+player-stats:
+    filename: fox-sports/player-stats/nba/fox-sports-nba-player-stats-{timestamp}-current
+    # https://api.foxsports.com/bifrost/v1/nba/player/1120/stats?apikey=jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+    url: https://api.foxsports.com/bifrost/v1/nba/player/{player_id}/stats
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+advanced-player-stats:
+    filename: fox-sports/advanced-player-stats/nba/fox-sports-nba-advanced-player-stats-{timestamp}-current
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq

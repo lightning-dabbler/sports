@@ -1,0 +1,49 @@
+# NCAA Men's College Basketball
+matchups:
+    filename: fox-sports/matchups/cbb/fox-sports-cbb-matchups-{timestamp}
+    url: https://api.foxsports.com/bifrost/v1/cbk/scoreboard/segment/{date_str}
+    params:
+        groupId: 2
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+matchup-team-stats:
+    filename: fox-sports/matchup-team-stats/cbb/fox-sports-cbb-matchup-team-stats-{timestamp}
+    url: https://api.foxsports.com/bifrost/v1/cbk/event/{event_id}/matchup
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+matchup-team-leaders-stats:
+    filename: fox-sports/matchup-team-leaders-stats/cbb/fox-sports-cbb-matchup-team-leaders-stats-{timestamp}
+
+fox-odds:
+    filename: fox-sports/fox-odds/cbb/fox-sports-cbb-fox-odds-{timestamp}
+
+fox-projections:
+    filename: fox-sports/fox-projections/cbb/fox-sports-cbb-fox-projections-{timestamp}
+
+team-player-stats:
+    filename: fox-sports/team-player-stats/cbb/fox-sports-cbb-team-player-stats-{timestamp}-current
+
+team-stats:
+    filename: fox-sports/team-stats/cbb/fox-sports-cbb-team-stats-{timestamp}-current
+    url: https://api.foxsports.com/bifrost/v1/cbk/team/{team_id}/stats
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+team-roster:
+    filename: fox-sports/team-roster/cbb/fox-sports-cbb-team-roster-{timestamp}-current
+    url: https://api.foxsports.com/bifrost/v1/cbk/team/{team_id}/roster
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+player-stats:
+    filename: fox-sports/player-stats/cbb/fox-sports-cbb-player-stats-{timestamp}-current
+    # https://api.foxsports.com/bifrost/v1/cbk/player/51645/stats?apikey=jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+    url: https://api.foxsports.com/bifrost/v1/cbk/player/{player_id}/stats
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+advanced-player-stats:
+    filename: fox-sports/advanced-player-stats/cbb/fox-sports-cbb-advanced-player-stats-{timestamp}-current
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq

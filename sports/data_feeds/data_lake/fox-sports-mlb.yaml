@@ -1,0 +1,48 @@
+# Major League Baseball (MLB)
+matchups:
+    filename: fox-sports/matchups/mlb/fox-sports-mlb-matchups-{timestamp}
+    url: https://api.foxsports.com/bifrost/v1/mlb/scoreboard/segment/{date_str}
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+matchup-team-stats:
+    filename: fox-sports/matchup-team-stats/mlb/fox-sports-mlb-matchup-team-stats-{timestamp}
+    url: https://api.foxsports.com/bifrost/v1/mlb/event/{event_id}/matchup
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+matchup-team-leaders-stats:
+    filename: fox-sports/matchup-team-leaders-stats/mlb/fox-sports-mlb-matchup-team-leaders-stats-{timestamp}
+
+fox-odds:
+    filename: fox-sports/fox-odds/mlb/fox-sports-mlb-fox-odds-{timestamp}
+
+fox-projections:
+    filename: fox-sports/fox-projections/mlb/fox-sports-mlb-fox-projections-{timestamp}
+
+team-player-stats:
+    filename: fox-sports/team-player-stats/mlb/fox-sports-mlb-team-player-stats-{timestamp}-current
+
+team-stats:
+    filename: fox-sports/team-stats/mlb/fox-sports-mlb-team-stats-{timestamp}-current
+    url: https://api.foxsports.com/bifrost/v1/mlb/team/{team_id}/stats
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+team-roster:
+    filename: fox-sports/team-roster/mlb/fox-sports-mlb-team-roster-{timestamp}-current
+    url: https://api.foxsports.com/bifrost/v1/mlb/team/{team_id}/roster
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+player-stats:
+    filename: fox-sports/player-stats/mlb/fox-sports-mlb-player-stats-{timestamp}-current
+    # https://api.foxsports.com/bifrost/v1/mlb/player/10924/stats?apikey=jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+    url: https://api.foxsports.com/bifrost/v1/mlb/player/{player_id}/stats
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
+
+advanced-player-stats:
+    filename: fox-sports/advanced-player-stats/mlb/fox-sports-mlb-advanced-player-stats-{timestamp}-current
+    params:
+        apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq

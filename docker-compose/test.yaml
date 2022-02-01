@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  sports-test:
+    container_name: sports-test
+    image: sports-local
+    build:
+      context: .
+      dockerfile: docker/local/Dockerfile
+    ports:
+      - "8089:8088"
+    volumes:
+      - ./cover:/sports/cover
+      - ./sports:/sports/sports
+      - ./tests:/sports/tests
+      - ./Makefile:/sports/Makefile
+      - ./pyproject.toml:/sports/pyproject.toml
+      - ./poetry.lock:/sports/poetry.lock
+      - ./bin:/sports/bin
+    networks:
+      - "sports-test"
+    entrypoint: make test
+
+networks:
+  sports-test:
