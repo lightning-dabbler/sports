@@ -1,0 +1,66 @@
+# Continuous Integration (CI) Tests
+FROM python:3.7.5-slim as base
+
+RUN apt-get update && apt-get install -y make
+
+    # python
+ENV PYTHONUNBUFFERED=1 \
+    # prevents python creating .pyc files
+    PYTHONDONTWRITEBYTECODE=1 \
+    \
+    # pip
+    PIP_NO_CACHE_DIR=off \
+    PIP_DISABLE_PIP_VERSION_CHECK=on \
+    PIP_DEFAULT_TIMEOUT=100 \
+    \
+    # poetry
+    # https://python-poetry.org/docs/configuration/#using-environment-variables
+    POETRY_VERSION=1.1.12 \
+    # make poetry install to this location
+    POETRY_HOME="/opt/poetry" \
+    # poetry to not create the virtual environment
+    POETRY_VIRTUALENVS_IN_PROJECT=false \
+    POETRY_VIRTUALENVS_CREATE=false \
+    # do not ask any interactive question
+    POETRY_NO_INTERACTION=1 \
+    # path
+    # virtual environment will live
+    VIRTUAL_ENV="/opt/pysetup/venv"
+
+# prepend poetry and venv to path
+ENV PATH="$POETRY_HOME/bin:$VIRTUAL_ENV/bin:$PATH"
+
+RUN python3 -m venv $VIRTUAL_ENV
+
+# builder-base
+FROM base as builder-base
+
+RUN apt-get update \
+    && apt-get install --no-install-recommends -y \
+    # deps for installing poetry
+    curl \
+    # deps for building python deps
+    build-essential
+
+# install poetry - respects $POETRY_VERSION & $POETRY_HOME
+RUN curl -sSL https://install.python-poetry.org | python -
+
+# Final
+FROM base as final
+
+# copy in our built poetry
+COPY --from=builder-base $POETRY_HOME $POETRY_HOME
+
+WORKDIR /sports
+
+COPY pyproject.toml poetry.lock Makefile ./
+COPY sports ./sports
+COPY tests ./tests
+
+RUN poetry run pip install --upgrade pip==22.0.1
+RUN poetry install
+
+LABEL version="0.0.1"
+
+EXPOSE 8086
+ENV PS1 "\[\033[32m\]\w\[\033[33m\]\[\033[00m\] $ "

@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+    sports-main:
+        container_name: sports-main
+        image: sports-main:$TAG
+        build:
+            context: .
+            dockerfile: docker/main/Dockerfile
+        networks:
+            - "sports-main"
+networks:
+    sports-main:

@@ -1,0 +1,65 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool]
+
+[tool.black]
+line-length = 120
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = 'black'
+line_length = 120
+
+[tool.poetry]
+name = "sports"
+version = "0.0.1"
+description = "An opinionated collection of processes that extracts and constructs sports related data artifacts from public applications"
+authors = ["lightning-dabbler"]
+repository = "https://github.com/lightning-dabbler/sports"
+homepage = "https://github.com/lightning-dabbler/sports"
+license = "MIT"
+packages = [
+  {include = "sports", from = "."},
+]
+
+[tool.poetry.dependencies]
+python = "^3.7.5"
+click = "~=8.0"
+requests = "~=2.27"
+pyyaml = "~=6.0"
+pendulum = "~=2.1"
+loguru = "~=0.6"
+smart_open = {version = "~=5.2.1",extras = ["all"]}
+poetry-core = "^1"
+backoff = "~=1.11"
+more-itertools = "~=8.12"
+
+[tool.poetry.dev-dependencies]
+pytest = "~=6.2"
+pytest-cov = "~=2.12"
+pytest-html = "~=3.1"
+black = "==22.1.0"
+isort = "==5.10.1"
+flake8 = "==4.0.1"
+bump2version = "==1.0.1"
+pre-commit = "==2.17.0"
+
+[tool.poetry.scripts]
+sports = "sports.cli:cli"
+
+[tool.pytest.ini_options]
+addopts = '--ff --cov-branch --cov=sports --cov-report term:skip-covered --cov-report=html:cover --html=tests/test-report.html --self-contained-html'

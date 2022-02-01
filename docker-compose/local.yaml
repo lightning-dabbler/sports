@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+    sports-local:
+        container_name: sports-local
+        image: sports-local
+        build:
+            context: .
+            dockerfile: docker/local/Dockerfile
+        ports:
+            - "8088:8088"
+        volumes:
+            - ./:/sports
+            - /var/run/docker.sock:/var/run/docker.sock # To use docker in container
+        networks:
+            - "sports-local"
+        stdin_open: true # Keep STDIN open even if not attached
+        tty: true        # Allocate a pseudo-TTY
+
+networks:
+    sports-local:

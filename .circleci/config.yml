@@ -1,0 +1,104 @@
+version: 2.1
+commands:
+  setup_docker_environment:
+    steps:
+      - run:
+          name: Setup Docker Environment
+          command: |
+            sudo apt-get --allow-releaseinfo-change update
+            sudo apt-get install curl -y
+            sudo rm -rf /usr/bin/docker-compose
+            # Download docker-compose 1.29.2
+            sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            sudo chmod +x /usr/local/bin/docker-compose
+            sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+
+jobs:
+
+  test:
+    docker:
+      - image: circleci/python:3.7.5
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.6
+      - setup_docker_environment
+      - run:
+          name: Run Tests
+          command: |
+            make ci-test
+
+      - store_artifacts:
+          path: cover
+          destination: cover
+
+      - store_artifacts:
+          path: tests/test-report.html
+          destination: test-report.html
+
+  pre-commit-validate:
+    docker:
+      - image: circleci/python:3.7.5
+    steps:
+      - checkout
+      - run:
+          name: Run Pre-commit and validate all
+          command: |
+            sudo pip install --upgrade pip==22.0.1
+            pip install pre-commit==2.17.0
+            make validate
+
+  build-local-docker-image:
+    docker:
+      - image: circleci/python:3.7.5
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.6
+      - setup_docker_environment
+      - run:
+          name: Validate Local Docker image can successfully build
+          command: |
+            make build-local
+
+  build-main-docker-image:
+    docker:
+      - image: circleci/python:3.7.5
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.6
+      - setup_docker_environment
+      - run:
+          name: Validate Main Docker image can successfully build
+          command: |
+            make build
+
+  release-git-repo:
+    docker:
+      - image: circleci/python:3.7.5
+    steps:
+      - checkout
+      - run:
+          name: Push Release
+          command:  |
+            . venv/bin/activate
+            make release
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - test
+      - pre-commit-validate
+      - build-local-docker-image
+      - build-main-docker-image
+      - release-git-repo:
+          requires:
+            - test
+            - pre-commit-validate
+            - build-local-docker-image
+            - build-main-docker-image
+          filters:
+            branches:
+              only: main

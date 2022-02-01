@@ -1,0 +1,16 @@
+# Ignore everything
+*
+
+# Except
+!pyproject.toml
+!poetry.lock
+!sports/
+!Makefile
+!tests/
+
+# Also Ignore
+**/.data/
+**/__pycache__/
+**/*.egg-info/
+**/*.egg
+**/.DS_Store

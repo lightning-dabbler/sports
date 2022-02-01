@@ -1,0 +1,18 @@
+# Continuous Integration (CI) Tests
+version: '3.8'
+
+services:
+  sports-ci-test:
+    container_name: sports-ci-test
+    image: sports-ci-test
+    build:
+      context: .
+      dockerfile: docker/ci-test/Dockerfile
+    networks:
+      - "ci-test"
+    ports:
+      - "8086:8086"
+    entrypoint: make test
+
+networks:
+  ci-test:

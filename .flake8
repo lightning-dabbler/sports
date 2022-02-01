@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 120
+select = B,C,E,F,W,T4,B9
+ignore = E203, E501, W503
+# Usage options - https://flake8.pycqa.org/en/latest/user/options.html
+# F Class Errors - https://flake8.pycqa.org/en/latest/user/error-codes.html
+# E & W Class Errors - https://pycodestyle.pycqa.org/en/latest/intro.html#error-codes
+# "All" Flake8 Errors - https://gist.github.com/sharkykh/c76c80feadc8f33b129d846999210ba3
