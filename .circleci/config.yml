@@ -91,7 +91,6 @@ workflows:
     jobs:
       - test
       - pre-commit-validate
-      - build-docker-images
       - build-local-docker-image
       - build-main-docker-image
       - release-git-repo:
