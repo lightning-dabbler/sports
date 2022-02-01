@@ -48,7 +48,7 @@ jobs:
             pip install pre-commit==2.17.0
             make validate
 
-  build-docker-images:
+  build-local-docker-image:
     docker:
       - image: circleci/python:3.7.5
     steps:
@@ -57,9 +57,21 @@ jobs:
           version: 20.10.6
       - setup_docker_environment
       - run:
-          name: Validate Docker images can successfully build
+          name: Validate Local Docker image can successfully build
           command: |
             make build-local
+
+  build-main-docker-image:
+    docker:
+      - image: circleci/python:3.7.5
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.6
+      - setup_docker_environment
+      - run:
+          name: Validate Main Docker image can successfully build
+          command: |
             make build
 
   release-git-repo:
@@ -80,6 +92,8 @@ workflows:
       - test
       - pre-commit-validate
       - build-docker-images
+      - build-local-docker-image
+      - build-main-docker-image
       - release-git-repo:
           filters:
             branches:

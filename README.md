@@ -19,7 +19,8 @@ In the case of development that doesn't utilize containers the following are req
 - Python 3.7.5+
 
 ```bash
-make install-deps
+make install-deps # It's imperative to use an isolated environment before running this command or you'll risk Python dependencies in your environment being removed
+make init
 ```
 
 ### Repository Dependencies
