@@ -70,7 +70,7 @@ RUN chmod +x /usr/local/bin/docker-compose
 
 WORKDIR /sports
 
-COPY pyproject.toml poetry.lock .sports-completion.sh ./
+COPY pyproject.toml poetry.lock ./
 COPY sports ./sports
 
 RUN poetry run pip install --upgrade pip==22.0.1
