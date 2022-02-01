@@ -99,8 +99,8 @@ workflows:
   build:
     jobs:
       - test
-      - validate
-      - build-docker-image
+      - pre-commit-validate
+      - build-docker-images
       - release-git-repo:
           filters:
             branches:
