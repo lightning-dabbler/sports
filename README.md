@@ -1,4 +1,4 @@
-<h1 align="center">sports</h1>
+<h1 align="center">Sports</h1>
 <p align="center"><a href="https://circleci.com/gh/lightning-dabbler/sports" target="_blank"><img src="https://circleci.com/gh/lightning-dabbler/sports.svg?style=svg" alt="CircleCI Build Status"/>
 </a></p>
 
