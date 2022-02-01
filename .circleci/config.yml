@@ -82,7 +82,6 @@ jobs:
       - run:
           name: Push Release
           command:  |
-            . venv/bin/activate
             make release
 
 workflows:
