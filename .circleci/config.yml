@@ -44,7 +44,7 @@ jobs:
       - run:
           name: Run Pre-commit and validate all
           command: |
-            pip install --upgrade pip==22.0.1
+            sudo pip install --upgrade pip==22.0.1
             pip install pre-commit==2.17.0
             make validate
 
