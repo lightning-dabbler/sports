@@ -94,6 +94,11 @@ workflows:
       - build-local-docker-image
       - build-main-docker-image
       - release-git-repo:
+          requires:
+            - test
+            - pre-commit-validate
+            - build-local-docker-image
+            - build-main-docker-image
           filters:
             branches:
               only: main
