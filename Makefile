@@ -37,7 +37,7 @@ ci-test-down: # stop and remove dreg CI test containers and volume
 
 release: # Do a release of the current code.
 	./bin/release.sh git-tag-force
-	./bin/release.sh push-git-tag
+	./bin/release.sh push-git-tag-force
 
 build-local: # Build local development docker image
 	docker-compose -f docker-compose/local.yaml --project-directory . build --force-rm
