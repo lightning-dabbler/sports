@@ -2,32 +2,18 @@
 <p align="center"><a href="https://circleci.com/gh/lightning-dabbler/sports" target="_blank"><img src="https://circleci.com/gh/lightning-dabbler/sports.svg?style=svg" alt="CircleCI Build Status"/>
 </a></p>
 
-An opinionated collection of processes that extracts and constructs sports related data artifacts from public applications
+<p align="center">An opinionated collection of processes that extracts and constructs sports related data artifacts from public applications</p>
 
-### Setup
-
-Enter main sports docker container:
-```bash
-make enter
-```
-Development:
-```
-make up
-```
-In the case of development that doesn't utilize containers the following are required:
-- [poetry]==1.1.12
-- Python 3.7.5+
+### Installation
+Python 3.7.5+ Required
 
 ```bash
-make install-deps # It's imperative to use an isolated environment before running this command or you'll risk Python dependencies in your environment being removed
-make init
-```
+# latest
+pip install git+https://github.com/lightning-dabbler/sports.git
 
-### Repository Dependencies
-- [pre-commit]==2.17.0
-- [git]
-- [docker 20.10.5+]
-- [docker-compose 1.29.0+]
+# Tag
+pip install git+https://github.com/lightning-dabbler/sports.git@TAG
+```
 
 ### Usage
 ```bash
@@ -72,6 +58,31 @@ Options:
   --help                          Show this message and exit.
 ```
 
+### Development Setup
+Enter main sports docker container:
+```bash
+make enter
+```
+Development:
+```
+make up
+```
+In the case of development that doesn't utilize containers the following are required:
+- [poetry]==1.1.12
+- Python 3.7.5+
+
+```bash
+make install-deps # It's imperative to use an isolated environment before running this command or one will risk Python dependencies in their environment being removed and pip being upgraded
+make init
+```
+
+### Repository Dependencies
+- [pre-commit]==2.17.0
+- [docker 20.10.5+]
+- [docker-compose 1.29.0+]
+
+
+
 ### Help?
 
 ```bash
@@ -85,7 +96,6 @@ make
 Osarodion Irabor
 
 [pre-commit]:https://pre-commit.com/
-[git]:https://git-scm.com/
 [docker 20.10.5+]:https://docs.docker.com/engine/release-notes/#20105
 [docker-compose 1.29.0+]:https://docs.docker.com/compose/release-notes/#1290
 [poetry]:https://python-poetry.org/docs/

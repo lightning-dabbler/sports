@@ -14,6 +14,7 @@ update: # Updates poetry.lock file with up-to-date dependencies
 	poetry update -vvv
 
 install-deps: # install python dependencies and remove dependencies not in poetry.lock from environment
+	pip install --upgrade pip==22.0.1
 	poetry install --remove-untracked -vv
 
 init: # Install pre-commit default
@@ -35,7 +36,7 @@ ci-test-down: # stop and remove dreg CI test containers and volume
 	docker-compose -f docker-compose/ci-test.yaml --project-directory . down -v
 
 release: # Do a release of the current code.
-	./bin/release.sh git-tag
+	./bin/release.sh git-tag-force
 	./bin/release.sh push-git-tag
 
 build-local: # Build local development docker image
