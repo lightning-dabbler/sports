@@ -9,5 +9,3 @@ def header_date(headers_dict):
 
 
 MAX_WORKERS = cpu_count() * 2 + 1
-
-__all__ = [header_date, MAX_WORKERS]

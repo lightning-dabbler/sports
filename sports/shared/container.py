@@ -3,24 +3,22 @@ import json.decoder
 import pendulum
 from loguru import logger
 
-import sports.operations.utils
-from sports.operations.requests import make_request
+import sports.shared.utils
+from sports.shared.requests import make_request
 
 
 class BaseContainer:
-    pull_meta_keys = ["pull_timestamp"]
-
-    def __init__(self, raw_data=None, **meta):
-        self.raw_data = raw_data
+    def __init__(self, *args, raw_data=None, metadata=None, **kwargs):
+        self.raw_data = raw_data or {}
         self.data_extracts = []
-        self.meta = {}
-        for key in self.pull_meta_keys:
-            if meta.get(key):
-                self.meta[key] = meta[key]
+        self.metadata = metadata or {}
+        self.logger = logger.bind(__class_name__=self.__class__.__name__, __class__=self.__class__)
 
     @classmethod
-    def from_request(cls, url, set_pull_meta=True, **kwargs):
-        response = make_request(url, **kwargs)
+    def from_request(cls, url, *args, set_pull_metadata=True, request_kwargs=None, metadata=None, **kwargs):
+        request_kwargs = request_kwargs or {}
+        metadata = metadata or {}
+        response = make_request(url, **request_kwargs)
 
         try:
             raw_data = response.json()
@@ -29,8 +27,7 @@ class BaseContainer:
             logger.error("No JSON Payload at '{url}'", url=url)
             raw_data = {}
 
-        meta = {}
-        if set_pull_meta:
+        if set_pull_metadata:
             headers = response.headers
             header_date = sports.operations.utils.header_date(headers)
             logger.debug("Headers Date '{header_date}'", header_date=header_date)
@@ -38,8 +35,9 @@ class BaseContainer:
             logger.trace("Extracted Timestamp '{timestamp}'", timestamp=timestamp)
             pull_timestamp = timestamp.format("YYYY-MM-DD[T]HH:mm:ssZ")
             logger.debug("Formatted Headers Date '{pull_timestamp}'", pull_timestamp=pull_timestamp)
-            meta["pull_timestamp"] = pull_timestamp
-        return cls(raw_data=raw_data, **meta)
+            metadata["pull_timestamp"] = pull_timestamp
+        return cls(*args, raw_data=raw_data, metadata=metadata, **kwargs)
 
-    def extraction(self, extractor):
-        self.data_extracts = extractor(self.raw_data)
+    def extraction(self, *extractors):
+        for extractor in extractors:
+            extractor(self)

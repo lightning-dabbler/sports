@@ -29,6 +29,7 @@ class Archiver:
         self.action = {"mode": action}
         self.written_file = None
         self.records_written = 0
+        self.logger = logger.bind(__class_name__=self.__class__.__name__, __class__=self.__class__)
 
     def write(
         self,
@@ -36,10 +37,10 @@ class Archiver:
         if self.data:
             (first), iterable = more_itertools.spy(self.data, 1)
             if not first:
-                logger.critical("Source stream is empty!", stream=iterable)
+                self.logger.critical("Source stream is empty!", stream=iterable)
                 return
         else:
-            logger.critical("Source stream is empty!", stream=self.data)
+            self.logger.critical("Source stream is empty!", stream=self.data)
             return
         with sports.shared.file.open(self.base_uri, **self.action, **self.write_strategy) as f:
             self.records_written = self.serialization_strategy(f, iterable)
