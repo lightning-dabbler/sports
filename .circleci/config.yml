@@ -17,7 +17,7 @@ jobs:
 
   test:
     docker:
-      - image: circleci/python:3.7.5
+      - image: circleci/python:3.8.12
     steps:
       - checkout
       - setup_remote_docker:
@@ -38,7 +38,7 @@ jobs:
 
   pre-commit-validate:
     docker:
-      - image: circleci/python:3.7.5
+      - image: circleci/python:3.8.12
     steps:
       - checkout
       - run:
@@ -50,7 +50,7 @@ jobs:
 
   build-local-docker-image:
     docker:
-      - image: circleci/python:3.7.5
+      - image: circleci/python:3.8.12
     steps:
       - checkout
       - setup_remote_docker:
@@ -63,7 +63,7 @@ jobs:
 
   build-main-docker-image:
     docker:
-      - image: circleci/python:3.7.5
+      - image: circleci/python:3.8.12
     steps:
       - checkout
       - setup_remote_docker:
@@ -76,7 +76,7 @@ jobs:
 
   release-git-repo:
     docker:
-      - image: circleci/python:3.7.5
+      - image: circleci/python:3.8.12
     steps:
       - checkout
       - run:

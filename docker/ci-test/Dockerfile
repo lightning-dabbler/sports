@@ -1,5 +1,5 @@
 # Continuous Integration (CI) Tests
-FROM python:3.7.5-slim as base
+FROM python:3.8.12-slim as base
 
 RUN apt-get update && apt-get install -y make
 
@@ -15,7 +15,7 @@ ENV PYTHONUNBUFFERED=1 \
     \
     # poetry
     # https://python-poetry.org/docs/configuration/#using-environment-variables
-    POETRY_VERSION=1.1.12 \
+    POETRY_VERSION=1.1.13 \
     # make poetry install to this location
     POETRY_HOME="/opt/poetry" \
     # poetry to not create the virtual environment
