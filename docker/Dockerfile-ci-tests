@@ -1,10 +1,9 @@
-FROM python:3.7.5-slim as base
+# Continuous Integration (CI) Tests
+FROM python:3.8.12-slim as base
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y make openssh-client vim
+RUN apt-get update && apt-get install -y make
 
-# python
+    # python
 ENV PYTHONUNBUFFERED=1 \
     # prevents python creating .pyc files
     PYTHONDONTWRITEBYTECODE=1 \
@@ -16,7 +15,7 @@ ENV PYTHONUNBUFFERED=1 \
     \
     # poetry
     # https://python-poetry.org/docs/configuration/#using-environment-variables
-    POETRY_VERSION=1.1.12 \
+    POETRY_VERSION=1.1.13 \
     # make poetry install to this location
     POETRY_HOME="/opt/poetry" \
     # poetry to not create the virtual environment
@@ -39,45 +38,31 @@ FROM base as builder-base
 RUN apt-get update \
     && apt-get install --no-install-recommends -y \
     # deps for installing poetry
-    curl unzip \
+    curl \
     # deps for building python deps
     build-essential
 
 # install poetry - respects $POETRY_VERSION & $POETRY_HOME
 RUN curl -sSL https://install.python-poetry.org | python -
 
-# Download Docker Engine CLI - Community Edition
-RUN mkdir /docker-ce \
-    && cd /docker-ce \
-    && curl -O https://download.docker.com/linux/debian/dists/buster/pool/stable/amd64/docker-ce-cli_20.10.8~3-0~debian-buster_amd64.deb
-
-# Download docker-compose
-RUN curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-
 # Final
 FROM base as final
 
 # copy in our built poetry
 COPY --from=builder-base $POETRY_HOME $POETRY_HOME
-# copy Docker Engine CLI - Community Edition installation file
-COPY --from=builder-base /docker-ce/docker-ce-cli_20.10.8~3-0~debian-buster_amd64.deb /docker-ce/docker-ce-cli_20.10.8~3-0~debian-buster_amd64.deb
-# copy docker-compose
-COPY --from=builder-base /usr/local/bin/docker-compose /usr/local/bin/docker-compose
-
-# Docker & docker-compose
-RUN dpkg -i /docker-ce/docker-ce-cli_20.10.8~3-0~debian-buster_amd64.deb
-RUN chmod +x /usr/local/bin/docker-compose
 
 WORKDIR /sports
 
-COPY pyproject.toml poetry.lock ./
+COPY pyproject.toml poetry.lock Makefile ./
 COPY sports ./sports
+COPY tests ./tests
+COPY integration_tests ./integration_tests
+COPY bin/integration-tests-entrypoint.sh bin/unit-tests-entrypoint.sh ./bin/
 
 RUN poetry run pip install --upgrade pip==22.0.1
 RUN poetry install
 
-RUN rm -rf /sports/*
+LABEL version="0.1.0"
 
-LABEL version="0.0.1"
-
-EXPOSE 8088
+EXPOSE 8086
+ENV PS1 "\[\033[32m\]\w\[\033[33m\]\[\033[00m\] $ "

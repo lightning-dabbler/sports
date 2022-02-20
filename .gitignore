@@ -51,6 +51,7 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 tests/test-report.html
+integration_tests/test-report.html
 cover/
 
 # Translations

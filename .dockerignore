@@ -7,6 +7,8 @@
 !sports/
 !Makefile
 !tests/
+!bin/
+!integration_tests/
 
 # Also Ignore
 **/.data/

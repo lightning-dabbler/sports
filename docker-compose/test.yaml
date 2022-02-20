@@ -6,13 +6,14 @@ services:
     image: sports-local
     build:
       context: .
-      dockerfile: docker/local/Dockerfile
+      dockerfile: docker/Dockerfile-local
     ports:
       - "8089:8088"
     volumes:
       - ./cover:/sports/cover
       - ./sports:/sports/sports
       - ./tests:/sports/tests
+      - ./integration_tests:/sports/integration_tests
       - ./Makefile:/sports/Makefile
       - ./pyproject.toml:/sports/pyproject.toml
       - ./poetry.lock:/sports/poetry.lock

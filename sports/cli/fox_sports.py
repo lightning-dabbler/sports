@@ -11,8 +11,8 @@ from sports.data_feeds import merge_dicts, read_config
 from sports.operations.download.fox_sports import relationships
 from sports.operations.download.fox_sports.orchestrator import Orchestrator
 from sports.operations.relations import create_relation
-from sports.operations.utils import MAX_WORKERS
 from sports.shared.serde import COMPRESSION_OPTIONS, FILE_EXT, FILE_TYPE_OPTIONS
+from sports.shared.utils import MAX_WORKERS
 
 validations = sports.operations.validations.Validations(
     datasets=relationships.KNOWN_DATASETS, groups=relationships.KNOWN_GROUPS

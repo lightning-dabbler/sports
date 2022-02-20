@@ -7,12 +7,11 @@ services:
     image: sports-ci-test
     build:
       context: .
-      dockerfile: docker/ci-test/Dockerfile
+      dockerfile: docker/Dockerfile-ci-tests
     networks:
       - "ci-test"
     ports:
       - "8086:8086"
-    entrypoint: make test
 
 networks:
   ci-test:

@@ -63,7 +63,6 @@ def cli(verbose, serialize):
             sys.stderr,
             level=cli_log_level,
             serialize=serialize,
-            format="<level>[{level}]</level> <green>[{time}]</green> <level>{message}</level>",
             backtrace=True,
             diagnose=True,
         )
