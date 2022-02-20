@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-repo_version=v0.0.1
+repo_version=v0.1.0
 
 git-tag(){
     git tag $repo_version

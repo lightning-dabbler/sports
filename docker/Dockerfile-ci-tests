@@ -61,7 +61,7 @@ COPY bin/integration-tests-entrypoint.sh bin/unit-tests-entrypoint.sh ./bin/
 RUN poetry run pip install --upgrade pip==22.0.1
 RUN poetry install
 
-LABEL version="0.0.1"
+LABEL version="0.1.0"
 
 EXPOSE 8086
 ENV PS1 "\[\033[32m\]\w\[\033[33m\]\[\033[00m\] $ "

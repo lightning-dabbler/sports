@@ -26,7 +26,7 @@ line_length = 120
 
 [tool.poetry]
 name = "sports"
-version = "0.0.1"
+version = "0.1.0"
 description = "An opinionated collection of processes that extracts and constructs sports related data artifacts from public applications"
 authors = ["lightning-dabbler"]
 repository = "https://github.com/lightning-dabbler/sports"

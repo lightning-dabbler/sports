@@ -65,7 +65,7 @@ COPY --chown=runner:runner --from=builder-base "$PYSETUP_PATH/.venv" "$PYSETUP_P
 
 WORKDIR /sports
 
-LABEL version="0.0.1"
+LABEL version="0.1.0"
 
 EXPOSE 8587
 ENV PS1 "\[\033[32m\]\w\[\033[33m\]\[\033[00m\] $ "
