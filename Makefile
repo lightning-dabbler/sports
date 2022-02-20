@@ -37,7 +37,7 @@ ci-integration-tests: # runs containerized Continuous Integration (CI) Integrati
 	docker-compose -f docker-compose/ci-test.yaml --project-directory . build
 	docker-compose -f docker-compose/ci-test.yaml --project-directory . run --name sports-ci-test --entrypoint ./bin/integration-tests-entrypoint.sh sports-ci-test
 	docker cp sports-ci-test:/sports/cover ./cover
-	docker cp sports-ci-test:/sports/integration_tests/test-report.html ./integration_tests/test-report.html
+	docker cp sports-ci-test:/sports/tests/test-report.html ./integration_tests/test-report.html
 	docker-compose -f docker-compose/ci-test.yaml --project-directory . down
 
 ci-tests-down: # stop and remove CI test containers and volume
