@@ -15,7 +15,7 @@ commands:
 
 jobs:
 
-  test:
+  unit-tests:
     docker:
       - image: circleci/python:3.8.12
     steps:
@@ -24,9 +24,9 @@ jobs:
           version: 20.10.6
       - setup_docker_environment
       - run:
-          name: Run Tests
+          name: Run Unit Tests
           command: |
-            make ci-test
+            make ci-unit-tests
 
       - store_artifacts:
           path: cover
@@ -34,6 +34,27 @@ jobs:
 
       - store_artifacts:
           path: tests/test-report.html
+          destination: test-report.html
+
+  integration-tests:
+    docker:
+      - image: circleci/python:3.8.12
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.6
+      - setup_docker_environment
+      - run:
+          name: Run Integration Tests
+          command: |
+            make ci-integration-tests
+
+      - store_artifacts:
+          path: cover
+          destination: cover
+
+      - store_artifacts:
+          path: integration_tests/test-report.html
           destination: test-report.html
 
   pre-commit-validate:
@@ -88,13 +109,18 @@ workflows:
   version: 2
   build:
     jobs:
-      - test
+      - unit-tests
+      - integration-tests:
+          filters:
+            branches:
+              only: main
       - pre-commit-validate
       - build-local-docker-image
       - build-main-docker-image
       - release-git-repo:
           requires:
-            - test
+            - unit-tests
+            - integration-tests
             - pre-commit-validate
             - build-local-docker-image
             - build-main-docker-image

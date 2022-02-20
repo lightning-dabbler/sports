@@ -26,18 +26,26 @@ help: # generate make help
 validate:  # run pre-commit validation
 	pre-commit run --all-files
 
-ci-test: # runs containerized Continuous Integration (CI) Tests
-	docker-compose -f docker-compose/ci-test.yaml --project-directory . up --build --abort-on-container-exit
+ci-unit-tests: # runs containerized Continuous Integration (CI) Unit tests
+	docker-compose -f docker-compose/ci-test.yaml --project-directory . build
+	docker-compose -f docker-compose/ci-test.yaml --project-directory . run --name sports-ci-test --entrypoint ./bin/unit-tests-entrypoint.sh sports-ci-test
 	docker cp sports-ci-test:/sports/cover ./cover
 	docker cp sports-ci-test:/sports/tests/test-report.html ./tests/test-report.html
 	docker-compose -f docker-compose/ci-test.yaml --project-directory . down
 
-ci-test-down: # stop and remove dreg CI test containers and volume
+ci-integration-tests: # runs containerized Continuous Integration (CI) Integration tests
+	docker-compose -f docker-compose/ci-test.yaml --project-directory . build
+	docker-compose -f docker-compose/ci-test.yaml --project-directory . run --name sports-ci-test --entrypoint ./bin/integration-tests-entrypoint.sh sports-ci-test
+	docker cp sports-ci-test:/sports/cover ./cover
+	docker cp sports-ci-test:/sports/integration_tests/test-report.html ./integration_tests/test-report.html
+	docker-compose -f docker-compose/ci-test.yaml --project-directory . down
+
+ci-tests-down: # stop and remove CI test containers and volume
 	docker-compose -f docker-compose/ci-test.yaml --project-directory . down -v
 
 release: # Do a release of the current code.
-	./bin/release.sh git-tag-force
-	./bin/release.sh push-git-tag-force
+	./bin/release.sh git-tag
+	./bin/release.sh push-git-tag
 
 build-local: # Build local development docker image
 	docker-compose -f docker-compose/local.yaml --project-directory . build --force-rm
@@ -63,12 +71,17 @@ up: # Spins up local containerized development environment
 down: # Spins down local containerized development environment
 	docker-compose -f docker-compose/local.yaml --project-directory . down
 
-test: # Update Dependencies in Environment to match and Runs Tests
-	make install-deps
+test: # Runs all Tests
+	python -m pytest -vv tests/ integration_tests/
+
+unit-tests: # Run Unit tests
 	python -m pytest -vv tests/
 
-test-up: # Run test in docker container
-	docker-compose --project-directory . run --rm sports-test
+integration-tests: # Run Integrations tests
+	python -m pytest -s -vv integration_tests/
+
+test-run: # Unit test run in docker container
+	docker-compose -f docker-compose/test.yaml --project-directory . run --rm sports-test
 
 test-down: # stop and remove test container and volume
 	docker-compose -f docker-compose/test.yaml --project-directory . down -v

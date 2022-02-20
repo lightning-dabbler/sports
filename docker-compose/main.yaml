@@ -6,7 +6,7 @@ services:
         image: sports-main:$TAG
         build:
             context: .
-            dockerfile: docker/main/Dockerfile
+            dockerfile: docker/Dockerfile
         networks:
             - "sports-main"
 networks:

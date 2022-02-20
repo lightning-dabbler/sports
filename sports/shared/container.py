@@ -29,7 +29,7 @@ class BaseContainer:
 
         if set_pull_metadata:
             headers = response.headers
-            header_date = sports.operations.utils.header_date(headers)
+            header_date = sports.shared.utils.header_date(headers)
             logger.debug("Headers Date '{header_date}'", header_date=header_date)
             timestamp = pendulum.from_format(header_date, "ddd[,] DD MMM YYYY HH[:]mm[:]ss z")
             logger.trace("Extracted Timestamp '{timestamp}'", timestamp=timestamp)

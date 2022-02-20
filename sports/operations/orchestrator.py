@@ -4,8 +4,8 @@ import itertools
 import pendulum
 from loguru import logger
 
-from sports.operations.utils import MAX_WORKERS
 from sports.shared.operators import Archiver
+from sports.shared.utils import MAX_WORKERS
 
 
 class BaseOrchestrator:
@@ -87,7 +87,7 @@ class BaseOrchestrator:
                 write=write,
             )
             archiver.write()
-            self.logger.debug(
+            self.logger.info(
                 "{records} records written to '{filename}'",
                 filename=archiver.written_file,
                 records=archiver.records_written,
