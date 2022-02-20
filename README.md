@@ -5,7 +5,7 @@
 <p align="center">An opinionated collection of processes that extracts and constructs sports related data artifacts from public applications</p>
 
 ### Installation
-Python 3.7.5+ Required
+Python 3.8+ Required
 
 ```bash
 # latest
@@ -58,18 +58,33 @@ Options:
   --help                          Show this message and exit.
 ```
 
-### Development Setup
+Example execution:
+```bash
+$ sports -vv fox-sports matchups -s nba -b 2000 -dt 2022-02-16 --complete -f
+```
+
+
+### Docker development Setup
+Clone Repository:
+```bash
+git clone https://github.com/lightning-dabbler/sports.git
+```
 Enter main sports docker container:
 ```bash
 make enter
 ```
-Development:
-```
+Enter Development container:
+```bash
 make up
 ```
-In the case of development that doesn't utilize containers the following are required:
-- [poetry]==1.1.12
-- Python 3.7.5+
+
+### Virtual environment Development setup
+Clone Repository:
+```bash
+git clone https://github.com/lightning-dabbler/sports.git
+```
+
+Repository uses [poetry]==1.1.13 & `Python 3.8+`
 
 ```bash
 make install-deps # It's imperative to use an isolated environment before running this command or one will risk Python dependencies in their environment being removed and pip being upgraded
@@ -80,8 +95,8 @@ make init
 - [pre-commit]==2.17.0
 - [docker 20.10.5+]
 - [docker-compose 1.29.0+]
-
-
+- [poetry]==1.1.13
+- Python 3.8+
 
 ### Help?
 
