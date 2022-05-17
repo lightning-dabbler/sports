@@ -78,6 +78,6 @@ RUN poetry install
 
 RUN rm -rf /sports/*
 
-LABEL version="0.1.0"
+LABEL version="0.2.0"
 
 EXPOSE 8088
