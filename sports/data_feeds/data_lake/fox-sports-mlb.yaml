@@ -21,28 +21,28 @@ fox-projections:
     filename: fox-sports/fox-projections/mlb/fox-sports-mlb-fox-projections-{timestamp}
 
 team-player-stats:
-    filename: fox-sports/team-player-stats/mlb/fox-sports-mlb-team-player-stats-{timestamp}-current
+    filename: fox-sports/team-player-stats/mlb/fox-sports-mlb-team-player-stats-{timestamp}
 
 team-stats:
-    filename: fox-sports/team-stats/mlb/fox-sports-mlb-team-stats-{timestamp}-current
+    filename: fox-sports/team-stats/mlb/fox-sports-mlb-team-stats-{timestamp}
     url: https://api.foxsports.com/bifrost/v1/mlb/team/{team_id}/stats
     params:
         apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
 
 team-roster:
-    filename: fox-sports/team-roster/mlb/fox-sports-mlb-team-roster-{timestamp}-current
+    filename: fox-sports/team-roster/mlb/fox-sports-mlb-team-roster-{timestamp}
     url: https://api.foxsports.com/bifrost/v1/mlb/team/{team_id}/roster
     params:
         apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
 
 player-stats:
-    filename: fox-sports/player-stats/mlb/fox-sports-mlb-player-stats-{timestamp}-current
+    filename: fox-sports/player-stats/mlb/fox-sports-mlb-player-stats-{timestamp}
     # https://api.foxsports.com/bifrost/v1/mlb/player/10924/stats?apikey=jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
     url: https://api.foxsports.com/bifrost/v1/mlb/player/{player_id}/stats
     params:
         apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq
 
 advanced-player-stats:
-    filename: fox-sports/advanced-player-stats/mlb/fox-sports-mlb-advanced-player-stats-{timestamp}-current
+    filename: fox-sports/advanced-player-stats/mlb/fox-sports-mlb-advanced-player-stats-{timestamp}
     params:
         apikey: jE7yBJVRNAwdDesMgTzTXUUSx1It41Fq

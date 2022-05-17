@@ -26,7 +26,7 @@ line_length = 120
 
 [tool.poetry]
 name = "sports"
-version = "0.1.0"
+version = "0.2.0"
 description = "An opinionated collection of processes that extracts and constructs sports related data artifacts from public applications"
 authors = ["lightning-dabbler"]
 repository = "https://github.com/lightning-dabbler/sports"
@@ -52,7 +52,7 @@ more-itertools = "~=8.12"
 pytest = ">=6.2,<7.1"
 pytest-cov = ">=2.12,<3.1"
 pytest-html = "~=3.1"
-black = "==22.1.0"
+black = "==22.3.0"
 isort = "==5.10.1"
 flake8 = "==4.0.1"
 bump2version = "==1.0.1"

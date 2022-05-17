@@ -4,7 +4,7 @@ import click
 def command_requirement_options(*options, override_option="complete"):
     class CommandRequirement(click.Command):
         def invoke(self, ctx):
-            x = [ctx.params[option] is not None for option in options]
+            x = [True if ctx.params[option] else False for option in options]
             if not any(x) and not ctx.params[override_option]:
                 str_options = "', '".join(options)
                 message = f"At least one of the following parameters must be provided: '{str_options}' !"

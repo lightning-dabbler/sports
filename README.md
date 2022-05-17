@@ -49,7 +49,7 @@ Options:
   -p, --parallel INTEGER          Number of Concurrent Workers
   --tz TEXT                       Timezone of current data pull
   --config LOADS                  Inline configuration details
-  -c, --compression [.bz2|.gz]
+  -c, --compression [disable|infer_from_extension|.bz2|.gz]
   -ft, --file-type [json-lines|csv]
   -o, --output <output>           location to export data file(s) to
   -s, --sport TEXT                Sport in Fox Sports to pull data for
