@@ -5,7 +5,7 @@ import pytest
 import sports.shared.file
 
 
-def validate_date(data, location):
+def validate_data(data, location):
     with sports.shared.file.open(location, mode="wb") as f:
         for item in data:
             f.write(json.dumps(item).encode("utf-8") + b"\n")
@@ -26,4 +26,4 @@ def validate_date(data, location):
 )
 def test_open(tmpdir, file_, data):
     location = str(tmpdir.join(file_))
-    validate_date(data, location)
+    validate_data(data, location)

@@ -4,6 +4,7 @@ import time
 
 import click
 from loguru import logger
+from smart_open.compression import get_supported_extensions
 
 import sports
 import sports.operations.validations
@@ -35,7 +36,7 @@ def cli():
     help="location to export data file(s) to",
 )
 @click.option("-ft", "--file-type", default="csv", type=click.Choice(FILE_TYPE_OPTIONS), required=False)
-@click.option("-c", "--compression", default=".gz", type=click.Choice(COMPRESSION_OPTIONS), required=False)
+@click.option("-c", "--compression", default="disable", type=click.Choice(COMPRESSION_OPTIONS), required=False)
 @click.option(
     "--config",
     default="{}",
@@ -56,7 +57,7 @@ def cli():
     "--datasets",
     type=click.Choice(relationships.KNOWN_DATASETS),
     multiple=True,
-    default=[],
+    default=None,
     required=False,
     callback=validations.options_callback,
     help="Datasets to export",
@@ -66,7 +67,7 @@ def cli():
     "--groups",
     type=click.Choice(relationships.KNOWN_GROUPS),
     multiple=True,
-    default=[],
+    default=None,
     required=False,
     callback=validations.options_callback,
     help="Groups of datasets to export",
@@ -116,7 +117,10 @@ def matchups(
         output=output,
     )
     orchestrate.start()
-    file_ext = FILE_EXT[file_type] + compression
+    if compression in get_supported_extensions():
+        file_ext = FILE_EXT[file_type] + compression
+    else:
+        file_ext = FILE_EXT[file_type]
     for uri, record_count in orchestrate.written_files.items():
         full_path = uri if uri.endswith(file_ext) else f"{uri}{file_ext}"
         logger.info("'{file}' written with {records} records", records=record_count, file=full_path)

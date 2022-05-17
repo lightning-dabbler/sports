@@ -4,7 +4,7 @@ SERDE (Serialization-Deserialization) Strategies
 import csv
 import json
 
-from smart_open.compression import _COMPRESSOR_REGISTRY
+from smart_open.compression import get_supported_compression_types
 
 SERIALIZER_REGISTRY = {}
 DESERIALIZER_REGISTRY = {}
@@ -69,7 +69,7 @@ def serialize_json_lines(f, data, **kwargs):
 
 
 @register_strategy(SERIALIZER_REGISTRY, "csv")
-def serialize_csv(f, data, **kwargs):
+def serialize_csv(f, data, append=False, **kwargs):
     """
     csv delimited message encoding strategy
     :param f: a file handle or iterable of bytes
@@ -80,7 +80,8 @@ def serialize_csv(f, data, **kwargs):
     for record in data:
         if not writer:
             writer = csv.DictWriter(f, fieldnames=record.keys(), delimiter=",", quotechar='"', quoting=csv.QUOTE_ALL)
-            writer.writeheader()
+            if append is False:
+                writer.writeheader()
         writer.writerow(record)
         record_count += 1
     return record_count
@@ -89,5 +90,6 @@ def serialize_csv(f, data, **kwargs):
 FILE_EXT = {"json-lines": ".jsonl", "csv": ".csv"}
 WRITE_ACTION = {"csv": "w"}
 APPEND_ACTION = {"csv": "a"}
-COMPRESSION_OPTIONS = _COMPRESSOR_REGISTRY.keys()
+READ_ACTION = {"csv": "r"}
+COMPRESSION_OPTIONS = get_supported_compression_types()
 FILE_TYPE_OPTIONS = FILE_EXT.keys()

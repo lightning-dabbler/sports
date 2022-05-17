@@ -74,9 +74,9 @@ class BaseOrchestrator:
         if self.exports.get(feed):
             uri = self.uri(feed)
             self.written_files.setdefault(uri, 0)
-            write = True
+            append = False
             if self.written_files[uri] > 0:
-                write = False
+                append = True
 
             archiver = Archiver(
                 self.exports[feed],
@@ -84,7 +84,7 @@ class BaseOrchestrator:
                 write_strategy=self.write_strategy,
                 transport_params=self.transport_params,
                 file_type=self.file_type,
-                write=write,
+                append=append,
             )
             archiver.write()
             self.logger.info(
@@ -98,10 +98,7 @@ class BaseOrchestrator:
 
     def uri(self, feed):
         filename = self.feeds_config[feed]["filename"]
-        if filename.endswith("-current"):
-            filename = filename.format(timestamp=self.run_time.format("YYYYMMDDHHmmssZ"))
-        else:
-            filename = filename.format(timestamp=self.date.format("YYYYMMDDHHmmssZ"))
+        filename = filename.format(timestamp=self.run_time.format("YYYYMMDDHHmmssZ"))
         return f"{self.output.rstrip('/')}/{filename.lstrip('/')}"
 
     def get_permission(self, feed, permission):
